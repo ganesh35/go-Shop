@@ -1,8 +1,9 @@
 # #04: JWT
 Authentication via Json Web Tokens
 ### Dependency:
-- [Go-Json-Rest v3.3.1](https://github.com/ant0ine/go-json-rest)
-- [JWT Middleware for Go-Json-Rest](https://github.com/StephanDollberg/go-json-rest-middleware-jwt)
++ [Go-Json-Rest v3.3.1](https://github.com/ant0ine/go-json-rest)
++ [JWT Middleware for Go-Json-Rest](https://github.com/StephanDollberg/go-json-rest-middleware-jwt)
+
 ---
 ### Step #1: File and Folder Structure
 -- gUser
