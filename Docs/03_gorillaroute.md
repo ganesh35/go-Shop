@@ -35,7 +35,7 @@ d:\> set GOBIN=d:\GoCode\gUser\bin
 d:\> go get "github.com/gorilla/mux"
 ```
 ---
-### Step #3:  Basic Server
+### Step #3:  Gorilla/mux routing
 File: **src/main/web.go**  
 ```go
 package main 
