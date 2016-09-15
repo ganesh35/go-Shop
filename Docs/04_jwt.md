@@ -17,6 +17,7 @@ Authentication via Json Web Tokens
 + .gitignore
 + LICENCE
 + README.md
+
 ---
 ### Step #2:  Setting paths and installing necessary dependencies
 - Open command prompt / terminal (in windows : Start -> Run -> cmd )
