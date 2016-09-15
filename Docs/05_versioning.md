@@ -5,6 +5,7 @@ It defines a middleware that parses the version, checks a min and a max, and mak
 + [Go-Json-Rest v3.3.1](https://github.com/ant0ine/go-json-rest)
 + [JWT Middleware for Go-Json-Rest](https://github.com/StephanDollberg/go-json-rest-middleware-jwt)
 + [go-semver - Semantic Versioning Library](https://github.com/ant0ine/go-json-rest#api-versioning)
+
 ---
 ### Step #1:  Setting paths and installing necessary dependencies
 - Open command prompt / terminal (in windows : Start -> Run -> cmd )
