@@ -1,6 +1,6 @@
 # #04: JWT
 Authentication via Json Web Tokens
-### Dependency:
+### Dependencies:
 + [Go-Json-Rest v3.3.1](https://github.com/ant0ine/go-json-rest)
 + [JWT Middleware for Go-Json-Rest](https://github.com/StephanDollberg/go-json-rest-middleware-jwt)
 
