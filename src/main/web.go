@@ -15,6 +15,11 @@ func handle_auth(w rest.ResponseWriter, r *rest.Request) {
 }
 
 func main() {
+
+    users := Users{
+        Store: map[string]*User{},
+    }
+
     svmw := SemVerMiddleware{
         MinVersion: "1.0.0",
         MaxVersion: "3.0.0",
@@ -36,7 +41,7 @@ func main() {
  	api.Use(&rest.CorsMiddleware{
         RejectNonCorsRequests: false,
         OriginValidator: func(origin string, request *rest.Request) bool {
-            return origin == "http://my.other.host"
+            return origin == "*"
         },
         AllowedMethods: []string{"GET", "POST", "PUT"},
         AllowedHeaders: []string{
@@ -50,7 +55,7 @@ func main() {
     api.Use(&rest.IfMiddleware{
         Condition: func(request *rest.Request) bool {
 
-        	publicRoutes := []string{ "login", "message", "countries" }
+        	publicRoutes := []string{ "login", "message", "countries", "users", "user" }
         	
 			urlParts := strings.Split(request.URL.Path, "/")
         	result, _ :=  in_array_strings(urlParts[2], publicRoutes) ;
@@ -99,6 +104,78 @@ func main() {
             },
         )),
         // CORS /
+
+        // Users
+        rest.Get("/#version/users", svmw.MiddlewareFunc(
+            func(w rest.ResponseWriter, req *rest.Request) {
+                version := req.Env["VERSION"].(*semver.Version)
+                if version.Major >= 2 {
+                    // https://en.wikipedia.org/wiki/Second-system_effect
+                    w.WriteJson(map[string]string{
+                        "Body": "Not supported version!",
+                    })
+                } else {
+                	users.GetAllUsers(w, req);
+                }
+            },
+        )),
+        rest.Post("/#version/users", svmw.MiddlewareFunc(
+            func(w rest.ResponseWriter, req *rest.Request) {
+                version := req.Env["VERSION"].(*semver.Version)
+                if version.Major >= 2 {
+                    // https://en.wikipedia.org/wiki/Second-system_effect
+                    w.WriteJson(map[string]string{
+                        "Body": "Not supported version!",
+                    })
+                } else {
+                	users.PostUser(w, req);
+                }
+            },
+        )),
+        rest.Get("/#version/users/:id", svmw.MiddlewareFunc(
+            func(w rest.ResponseWriter, req *rest.Request) {
+                version := req.Env["VERSION"].(*semver.Version)
+                if version.Major >= 2 {
+                    // https://en.wikipedia.org/wiki/Second-system_effect
+                    w.WriteJson(map[string]string{
+                        "Body": "Not supported version!",
+                    })
+                } else {
+                	users.GetUser(w, req);
+                }
+            },
+        )),
+
+        rest.Put("/#version/users/:id", svmw.MiddlewareFunc(
+            func(w rest.ResponseWriter, req *rest.Request) {
+                version := req.Env["VERSION"].(*semver.Version)
+                if version.Major >= 2 {
+                    // https://en.wikipedia.org/wiki/Second-system_effect
+                    w.WriteJson(map[string]string{
+                        "Body": "Not supported version!",
+                    })
+                } else {
+                	users.PutUser(w, req);
+                }
+            },
+        )),
+
+
+        rest.Delete("/#version/users/:id", svmw.MiddlewareFunc(
+            func(w rest.ResponseWriter, req *rest.Request) {
+                version := req.Env["VERSION"].(*semver.Version)
+                if version.Major >= 2 {
+                    // https://en.wikipedia.org/wiki/Second-system_effect
+                    w.WriteJson(map[string]string{
+                        "Body": "Not supported version!",
+                    })
+                } else {
+                	users.DeleteUser(w, req);
+                }
+            },
+        )),
+
+        // Users /
 
     )
     api.SetApp(api_router)
