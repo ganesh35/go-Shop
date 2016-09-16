@@ -4,7 +4,6 @@ import (
     "log"
     "net/http"
     "time"
-
     "github.com/StephanDollberg/go-json-rest-middleware-jwt"
     "github.com/ant0ine/go-json-rest/rest"
     "github.com/coreos/go-semver/semver"
@@ -112,84 +111,3 @@ func main() {
 
 
 
-type SemVerMiddleware struct {
-    MinVersion string
-    MaxVersion string
-}
-
-func (mw *SemVerMiddleware) MiddlewareFunc(handler rest.HandlerFunc) rest.HandlerFunc {
-
-    minVersion, err := semver.NewVersion(mw.MinVersion)
-    if err != nil {
-        panic(err)
-    }
-
-    maxVersion, err := semver.NewVersion(mw.MaxVersion)
-    if err != nil {
-        panic(err)
-    }
-
-    return func(writer rest.ResponseWriter, request *rest.Request) {
-
-        version, err := semver.NewVersion(request.PathParam("version"))
-        if err != nil {
-            rest.Error(
-                writer,
-                "Invalid version: "+err.Error(),
-                http.StatusBadRequest,
-            )
-            return
-        }
-
-        if version.LessThan(*minVersion) {
-            rest.Error(
-                writer,
-                "Min supported version is "+minVersion.String(),
-                http.StatusBadRequest,
-            )
-            return
-        }
-
-        if maxVersion.LessThan(*version) {
-            rest.Error(
-                writer,
-                "Max supported version is "+maxVersion.String(),
-                http.StatusBadRequest,
-            )
-            return
-        }
-
-        request.Env["VERSION"] = version
-        handler(writer, request)
-    }
-}
-
-func in_array_strings(val string, array []string) (ok bool, i int) {  // Only for string array elements
-    for i = range array {
-        if ok = array[i] == val; ok {
-            return
-        }
-    }
-    return
-}
-
-
-// CORS
-type Country struct {
-	Code string
-	Name string
-}
-func GetAllCountries(w rest.ResponseWriter, r *rest.Request) {
-	w.WriteJson(
-		[]Country{
-			Country{
-				Code: "FR",
-				Name: "France",
-			},
-			Country{
-				Code: "US",
-				Name: "United States",
-			},
-		},
-	)
-}// CORS /

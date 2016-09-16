@@ -7,6 +7,28 @@ Cross-origin resource sharing (CORS) is a mechanism that allows restricted resou
 
 **Referance :** https://github.com/ant0ine/go-json-rest#cors
 
+
+---
+### File and Folder Structure
+-- gUser
++ src     :  # Source code goes here
+    - main  :  # main Package
+        - web.go  :  # main entry file
+        - countries.go : # to get the countries list
+        - helpers.go :  # helper functions goes here such as in_array ...
+        - SemVerMiddleware.go :  # SemVer Middleware implementation 
++ bin     :  # Generated binary files and configuration settings goes here
++ pkg
++ Docs       :  # Documentation goes here
+  - 01_hello.md
+  - 02_basicServer.md
+  - 03_gorillaroute.md
+  - 04_jwt.md
+  - 05_versioning.md
+  - 06_cors.md
++ .gitignore
++ LICENCE
++ README.md
 ---
 ### Step #1:  Setting paths and installing necessary dependencies
 - Open command prompt / terminal (in windows : Start -> Run -> cmd )
@@ -37,7 +59,7 @@ Please check the file **src/main/web.go**
     api.Use(rest.DefaultDevStack...)
 
     // CORS 
- 	api.Use(&rest.CorsMiddleware{
+    api.Use(&rest.CorsMiddleware{
         RejectNonCorsRequests: false,
         OriginValidator: func(origin string, request *rest.Request) bool {
             return origin == "http://my.other.host"
@@ -48,7 +70,7 @@ Please check the file **src/main/web.go**
         AccessControlAllowCredentials: true,
         AccessControlMaxAge:           3600,
     })
-	// CORS /
+    // CORS /
 
     // we use the IfMiddleware to remove certain paths from needing authentication
     api.Use(&rest.IfMiddleware{
