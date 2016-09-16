@@ -32,11 +32,26 @@ func main() {
 
     api := rest.NewApi()
     api.Use(rest.DefaultDevStack...)
+
+    // CORS 
+ 	api.Use(&rest.CorsMiddleware{
+        RejectNonCorsRequests: false,
+        OriginValidator: func(origin string, request *rest.Request) bool {
+            return origin == "http://my.other.host"
+        },
+        AllowedMethods: []string{"GET", "POST", "PUT"},
+        AllowedHeaders: []string{
+            "Accept", "Content-Type", "X-Custom-Header", "Origin"},
+        AccessControlAllowCredentials: true,
+        AccessControlMaxAge:           3600,
+    })
+	// CORS /
+
     // we use the IfMiddleware to remove certain paths from needing authentication
     api.Use(&rest.IfMiddleware{
         Condition: func(request *rest.Request) bool {
 
-        	publicRoutes := []string{ "login", "message" }
+        	publicRoutes := []string{ "login", "message", "countries" }
         	
 			urlParts := strings.Split(request.URL.Path, "/")
         	result, _ :=  in_array_strings(urlParts[2], publicRoutes) ;
@@ -70,6 +85,21 @@ func main() {
                 }
             },
         )),
+
+        // CORS
+        rest.Get("/#version/countries", svmw.MiddlewareFunc( 
+            func(w rest.ResponseWriter, req *rest.Request) {
+                version := req.Env["VERSION"].(*semver.Version)
+                if version.Major == 2 {
+                    w.WriteJson(map[string]string{
+                        "Body": "Hello broken World!",
+                    })
+                } else {
+                	GetAllCountries(w, req);
+                }
+            },
+        )),
+        // CORS /
 
     )
     api.SetApp(api_router)
@@ -142,3 +172,24 @@ func in_array_strings(val string, array []string) (ok bool, i int) {  // Only fo
     }
     return
 }
+
+
+// CORS
+type Country struct {
+	Code string
+	Name string
+}
+func GetAllCountries(w rest.ResponseWriter, r *rest.Request) {
+	w.WriteJson(
+		[]Country{
+			Country{
+				Code: "FR",
+				Name: "France",
+			},
+			Country{
+				Code: "US",
+				Name: "United States",
+			},
+		},
+	)
+}// CORS /
