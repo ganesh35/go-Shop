@@ -31,7 +31,7 @@ Using in-memory log system.  All the log entries will be saved in the memory.
 + Docs       :  # Documentation goes here
   - 01_hello.md
   - ...
-  - 09_log.md
+  - 09_customlog.md
 + .gitignore
 + LICENCE
 + README.md
