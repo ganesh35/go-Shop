@@ -15,19 +15,6 @@
     	"LogFile": "log",
     	"LogFormat": "json"
 	},
-	"LanguageSettings":{
-	    "Enabled": true,
-	    "Lang": "en-GB",
-	    "Debug": false,
-	    "Languages": {
-	      	"en-GB":"en-GB",
-	      	"de-DE":"de-DE"
-	    },
-	    "Folders":[
-	      	"language",
-	      	"language2"
-	    ]
-	},
 	"SystemSettings":{
 		"DefaultRole": "ROLE_USER_L1",
 		"DefaultManager": ""

@@ -14,13 +14,23 @@ import (
 
 
 var gConfig lib.GConfig
-
+var gLog lib.GLog
 
 func init(){
-	log.Println("Loading etc/config.json")
+	gLog.Info("---------------------------------------");
+	gLog.Info("Application started");	
+	gLog.Info("Loading etc/config.json file ");
 	gConfig.LoadFile("etc/config.json")
-	log.Println("Loading completed")
-	log.Println("HttpSettings from config.json file " + gConfig.HttpSettings.Domain + " : " +  gConfig.HttpSettings.Port )
+	gLog.Info("Loading config.json completed")
+	gLog.Warning("HttpSettings from config.json file " + gConfig.HttpSettings.Domain + " : " +  gConfig.HttpSettings.Port )
+	gLog.Error("Testing Error log entry ")
+	gLog.Critical("Testing Critical log entry ")
+
+}
+func close(){
+	gLog.Info("Closing Logger");
+	gLog.Info("Application ended ----- ");
+	gLog.Close(gConfig.LogSettings.LogFolder, gConfig.LogSettings.LogFile, gConfig.LogSettings.LogFormat)
 }
 
 
@@ -29,7 +39,7 @@ func handle_auth(w rest.ResponseWriter, r *rest.Request) {
 }
 
 func main() {
-
+	defer close()
     users := Users{
         Store: map[string]*User{},
     }
@@ -72,7 +82,7 @@ func main() {
         	publicRoutes := []string{ "login", "message", "countries", "users", "user" }
         	
 			urlParts := strings.Split(request.URL.Path, "/")
-        	result, _ :=  in_array_strings(urlParts[2], publicRoutes) ;
+        	result, _ :=  lib.In_array_strings(urlParts[2], publicRoutes) ;
         	if result == true {
         		return false;
         	}
