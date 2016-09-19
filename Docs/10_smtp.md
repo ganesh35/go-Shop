@@ -4,10 +4,12 @@ Be sure to enter Gmail username and password in the config.json file
 ### ToDo:
 - Attachment support
 - HTML and Plaintext body support
+
 ### Dependencies:
 + [Go-Json-Rest v3.3.1](https://github.com/ant0ine/go-json-rest)
 + [JWT Middleware for Go-Json-Rest](https://github.com/StephanDollberg/go-json-rest-middleware-jwt)
 + [go-semver - Semantic Versioning Library](https://github.com/ant0ine/go-json-rest#api-versioning)
+
 ### References:
 - SMTP mail: https://golang.org/pkg/net/smtp/
 - Email: https://golang.org/pkg/net/mail/
