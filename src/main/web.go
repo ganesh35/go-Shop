@@ -17,6 +17,8 @@ var gConfig lib.GConfig
 var gLog lib.GLog
 
 func init(){
+
+
 	gLog.Info("---------------------------------------");
 	gLog.Info("Application started");	
 	gLog.Info("Loading etc/config.json file ");
@@ -26,6 +28,7 @@ func init(){
 	gLog.Error("Testing Error log entry ")
 	gLog.Critical("Testing Critical log entry ")
 
+	lib.SendEmail(gConfig.SmtpSettings, gConfig.MailSettings, "ganesh.35@gmail.com", "Test mail fro GO", "this is a sample body message")
 }
 func close(){
 	gLog.Info("Closing Logger");
