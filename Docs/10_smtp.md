@@ -8,6 +8,9 @@ Be sure to enter Gmail username and password in the config.json file
 + [Go-Json-Rest v3.3.1](https://github.com/ant0ine/go-json-rest)
 + [JWT Middleware for Go-Json-Rest](https://github.com/StephanDollberg/go-json-rest-middleware-jwt)
 + [go-semver - Semantic Versioning Library](https://github.com/ant0ine/go-json-rest#api-versioning)
+### References:
+- SMTP mail: https://golang.org/pkg/net/smtp/
+- Email: https://golang.org/pkg/net/mail/
 
 ---
 ### Step #1: File and Folder Structure
@@ -61,13 +64,13 @@ d:\> go get github.com/coreos/go-semver/semver
 Please check the file **src/main/web.go**
 ```go
     ...
-	gLog.Critical("Testing Critical log entry ")
-	lib.SendEmail(
-	    gConfig.SmtpSettings, 
-	    gConfig.MailSettings, 
-	    "some_email@gmail.com", 
-	    "Test mail fro GO", 
-	    "this is a sample body message"	)
+    gLog.Critical("Testing Critical log entry ")
+    lib.SendEmail(
+        gConfig.SmtpSettings, 
+        gConfig.MailSettings, 
+        "some_email@gmail.com", 
+        "Test mail fro GO", 
+        "this is a sample body message" )
 }
 func close(){
     ...
@@ -87,13 +90,13 @@ func SendEmail(
     toEmail string, 
     subject string, 
     body string) (err error) {
-	defer CatchPanic(&err, "sendEmail")
-	emailauth := smtp.PlainAuth("", smtpSettings.Username, smtpSettings.Password, smtpSettings.Host)
+    defer CatchPanic(&err, "sendEmail")
+    emailauth := smtp.PlainAuth("", smtpSettings.Username, smtpSettings.Password, smtpSettings.Host)
     sender :=  mailSettings.Sender_email// 
- 	receivers := []string{
- 		toEmail,
- 	}
-	from := mail.Address{mailSettings.Sender_name, mailSettings.Sender_email}
+    receivers := []string{
+        toEmail,
+    }
+    from := mail.Address{mailSettings.Sender_name, mailSettings.Sender_email}
     to   := mail.Address{"", toEmail}
     // Setup headers
     headers := make(map[string]string)
@@ -110,7 +113,7 @@ func SendEmail(
     message += "\r\n" + body
     // send out the email
     err = smtp.SendMail( fmt.Sprintf("%s:%d", smtpSettings.Host, smtpSettings.Port), //convert port number from int to string
-    	emailauth,
+        emailauth,
         sender,
         receivers,
         []byte(message),
