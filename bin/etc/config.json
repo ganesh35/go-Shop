@@ -1,0 +1,48 @@
+{
+	"DbSettings":{
+		"Domain" : "localhost",
+		"Port": "27017",
+		"Username": "dbUserName",
+		"Password": "",
+		"Database": "gs01"
+	},
+	"HttpSettings":{
+		"Domain": "localhost",
+		"Port": "8080"
+	},  
+	"LogSettings":{
+		"LogFolder": "logs/",
+    	"LogFile": "log",
+    	"LogFormat": "json"
+	},
+	"LanguageSettings":{
+	    "Enabled": true,
+	    "Lang": "en-GB",
+	    "Debug": false,
+	    "Languages": {
+	      	"en-GB":"en-GB",
+	      	"de-DE":"de-DE"
+	    },
+	    "Folders":[
+	      	"language",
+	      	"language2"
+	    ]
+	},
+	"SystemSettings":{
+		"DefaultRole": "ROLE_USER_L1",
+		"DefaultManager": ""
+	},
+	"SmtpSettings":{
+      "Smtp_enabled": true,
+      "Host":"smtp.mydomain.com",
+      "Username":"mysmtp@mydomain.com",
+      "Password":"",
+      "Port":587,
+      "Secure":""
+  	},
+	"MailSettings":{
+		"Alert_email":"alert-me@mydomain.com",
+	   	"Sender_name": "Support Team",
+	   	"Sender_email": "Me@mydomain.org"
+	}
+}

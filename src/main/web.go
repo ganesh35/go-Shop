@@ -8,7 +8,21 @@ import (
     "github.com/ant0ine/go-json-rest/rest"
     "github.com/coreos/go-semver/semver"
     "strings"
+
+    "lib"
 )
+
+
+var gConfig lib.GConfig
+
+
+func init(){
+	log.Println("Loading etc/config.json")
+	gConfig.LoadFile("etc/config.json")
+	log.Println("Loading completed")
+	log.Println("HttpSettings from config.json file " + gConfig.HttpSettings.Domain + " : " +  gConfig.HttpSettings.Port )
+}
+
 
 func handle_auth(w rest.ResponseWriter, r *rest.Request) {
     w.WriteJson(map[string]string{"authed": r.Env["REMOTE_USER"].(string)})
