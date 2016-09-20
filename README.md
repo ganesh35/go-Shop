@@ -19,13 +19,18 @@ This program uses the following Programming languages, repositories and Tools:
 
 
 ## Features
-+ User registration
-+ User de-registration
-+ Login
-+ Logout
-+ Forgot Password
-+ JWT
-
+- User management
+	+ User registration
+	+ User de-registration
+	+ Login
+	+ Logout
+	+ Forgot Password
+	+ JWT
+- Pages management
+	+ Add / Edit page
+	+ Manage pages
+	+ Show list of pages
+	+ Show a page
 
 ## Installation
 -Coming soon-
