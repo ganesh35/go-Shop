@@ -1,4 +1,4 @@
-# gUser   1.0.0-dev.01
+# go-Shop   1.0.0-dev.01
 RESTful user management system using Go (version go1.7.1)
 
 * [Technical Informatoin](#tech-info)
