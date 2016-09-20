@@ -8,13 +8,14 @@ import (
     "github.com/ant0ine/go-json-rest/rest"
     "github.com/coreos/go-semver/semver"
     "strings"
-
-    "lib"
+    "main/lib"
+    GUsers "main/components/users"
 )
 
 
 var gConfig lib.GConfig
 var gLog lib.GLog
+
 
 func init(){
 
@@ -43,9 +44,10 @@ func handle_auth(w rest.ResponseWriter, r *rest.Request) {
 
 func main() {
 	defer close()
-    users := Users{
-        Store: map[string]*User{},
+    users := GUsers.Users{
+        Store: map[string]* GUsers.User{},
     }
+
 
     svmw := SemVerMiddleware{
         MinVersion: "1.0.0",

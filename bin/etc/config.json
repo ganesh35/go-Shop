@@ -21,15 +21,16 @@
 	},
 	"SmtpSettings":{
       "Smtp_enabled": true,
-      "Host":"smtp.mydomain.com",
-      "Username":"mysmtp@mydomain.com",
-      "Password":"",
+      "Host":"smtp.gmail.com",
+      "Username":"ganesh35@gmail.com",
+      "Password":"y3n52m6a35",
       "Port":587,
       "Secure":""
   	},
 	"MailSettings":{
-		"Alert_email":"alert-me@mydomain.com",
-	   	"Sender_name": "Support Team",
-	   	"Sender_email": "Me@mydomain.org"
+		"Alert_email":"ganesh35+alert@gmail.com",
+	   "Sender_name": "Support Team",
+	   "Sender_email": "ganesh@batchu.org"
 	}
+
 }
