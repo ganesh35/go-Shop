@@ -2,8 +2,8 @@
 	"DbSettings":{
 		"Domain" : "localhost",
 		"Port": "27017",
-		"Username": "dbUserName",
-		"Password": "",
+		"Username": "bgkumar",
+		"Password": "m3r23d3z",
 		"Database": "gs01"
 	},
 	"HttpSettings":{

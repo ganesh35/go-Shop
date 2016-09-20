@@ -9,13 +9,15 @@ import (
     "github.com/coreos/go-semver/semver"
     "strings"
     "main/lib"
+    "gopkg.in/mgo.v2"
+    "gopkg.in/mgo.v2/bson"
     GUsers "main/components/users"
 )
 
 
 var gConfig lib.GConfig
 var gLog lib.GLog
-
+var gFullDatabase *mgo.Database
 
 func init(){
 
@@ -29,7 +31,17 @@ func init(){
 	gLog.Error("Testing Error log entry ")
 	gLog.Critical("Testing Critical log entry ")
 
-	lib.SendEmail(gConfig.SmtpSettings, gConfig.MailSettings, "ganesh.35@gmail.com", "Test mail fro GO", "this is a sample body message")
+    lib.ConnectDB(&gConfig)
+    gFullDatabase = lib.FullDatabase
+
+    var result []interface{}
+    var err error
+
+    err = gFullDatabase.C("pages").Find(nil).Select(bson.M{"_id": 1,"Title": 1,"Alias": 1,"Lang": 1 }) .All(&result) 
+    log.Println(result)
+    log.Println(err)
+
+	//lib.SendEmail(gConfig.SmtpSettings, gConfig.MailSettings, "ganesh.35@gmail.com", "Test mail fro GO", "this is a sample body message")
 }
 func close(){
 	gLog.Info("Closing Logger");
@@ -189,7 +201,6 @@ func main() {
             },
         )),
 
-
         rest.Delete("/#version/users/:id", svmw.MiddlewareFunc(
             func(w rest.ResponseWriter, req *rest.Request) {
                 version := req.Env["VERSION"].(*semver.Version)
@@ -203,17 +214,19 @@ func main() {
                 }
             },
         )),
-
         // Users /
 
     )
+
     api.SetApp(api_router)
-
     http.Handle("/api/", http.StripPrefix("/api", api.MakeHandler()))
+    domainAndPort := gConfig.HttpSettings.Domain + ":" + gConfig.HttpSettings.Port
+    log.Fatal(http.ListenAndServe(domainAndPort, nil))    
 
-    log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-
-
-
+func close(){
+    gsLog.Info("Application ended ----- ");
+    gsLog.Close(gsConfig.LogSettings.LogFolder, gsConfig.LogSettings.LogFile, gsConfig.LogSettings.LogFormat)
+    lib.CloseDB()
+}
